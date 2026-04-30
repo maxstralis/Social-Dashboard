@@ -186,6 +186,7 @@ body::before {
   font-size: 32px; color: var(--white); line-height: 1;
   letter-spacing: 0.5px;
 }
+.kpi-value[title] { cursor: help; }
 .kpi-value .unit {
   font-size: 14px; color: var(--black-05); margin-left: 4px;
   font-family: 'Riforma LL', sans-serif; font-weight: 400;
@@ -212,7 +213,28 @@ body::before {
   display: flex; justify-content: space-between; align-items: baseline;
   margin-bottom: 6px; padding-bottom: 14px;
   border-bottom: 1px solid var(--red-03);
+  gap: 12px;
 }
+.chart-head-text {
+  display: flex; flex-direction: column; gap: 2px; min-width: 0;
+}
+.chart-download {
+  flex: 0 0 auto;
+  background: transparent;
+  border: 1px solid var(--black-03);
+  color: var(--black-05);
+  font-family: 'Riforma LL', sans-serif;
+  font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 6px 10px; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 6px;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+}
+.chart-download:hover {
+  border-color: var(--astralis-red);
+  color: var(--white);
+  background: rgba(237, 32, 36, 0.08);
+}
+.chart-download svg { width: 11px; height: 11px; display: block; }
 .chart-title {
   font-family: 'Astralis Display', sans-serif;
   font-size: 16px; letter-spacing: 1px; color: var(--white);
@@ -330,64 +352,88 @@ body::before {
   <div class="chart-grid">
     <div class="chart-card fade-in" style="animation-delay: 0.15s">
       <div class="chart-head">
-        <div class="chart-title">Impressions</div>
-        <div class="chart-sub">Reach by platform</div>
+        <div class="chart-head-text">
+          <div class="chart-title">Impressions</div>
+          <div class="chart-sub">Reach by platform</div>
+        </div>
+        <button class="chart-download" data-chart="chartImpressions" data-filename="impressions" title="Download as transparent PNG"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 1v8m0 0L3 6m3 3l3-3M2 11h8"/></svg>PNG</button>
       </div>
       <div class="chart-body"><canvas id="chartImpressions"></canvas></div>
     </div>
 
     <div class="chart-card fade-in" style="animation-delay: 0.2s">
       <div class="chart-head">
-        <div class="chart-title">Engagements</div>
-        <div class="chart-sub">Likes · comments · shares</div>
+        <div class="chart-head-text">
+          <div class="chart-title">Engagements</div>
+          <div class="chart-sub">Likes · comments · shares</div>
+        </div>
+        <button class="chart-download" data-chart="chartEngagements" data-filename="engagements" title="Download as transparent PNG"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 1v8m0 0L3 6m3 3l3-3M2 11h8"/></svg>PNG</button>
       </div>
       <div class="chart-body"><canvas id="chartEngagements"></canvas></div>
     </div>
 
     <div class="chart-card fade-in" style="animation-delay: 0.25s">
       <div class="chart-head">
-        <div class="chart-title">Video Views</div>
-        <div class="chart-sub">Across all formats</div>
+        <div class="chart-head-text">
+          <div class="chart-title">Video Views</div>
+          <div class="chart-sub">Across all formats</div>
+        </div>
+        <button class="chart-download" data-chart="chartVideoViews" data-filename="video-views" title="Download as transparent PNG"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 1v8m0 0L3 6m3 3l3-3M2 11h8"/></svg>PNG</button>
       </div>
       <div class="chart-body"><canvas id="chartVideoViews"></canvas></div>
     </div>
 
     <div class="chart-card fade-in" style="animation-delay: 0.3s">
       <div class="chart-head">
-        <div class="chart-title">Follower Growth</div>
-        <div class="chart-sub">Net change per month</div>
+        <div class="chart-head-text">
+          <div class="chart-title">Follower Growth</div>
+          <div class="chart-sub">Net change per month</div>
+        </div>
+        <button class="chart-download" data-chart="chartFollowers" data-filename="follower-growth" title="Download as transparent PNG"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 1v8m0 0L3 6m3 3l3-3M2 11h8"/></svg>PNG</button>
       </div>
       <div class="chart-body"><canvas id="chartFollowers"></canvas></div>
     </div>
 
     <div class="chart-card fade-in" style="animation-delay: 0.35s">
       <div class="chart-head">
-        <div class="chart-title">Total Posts</div>
-        <div class="chart-sub">Output volume by channel</div>
+        <div class="chart-head-text">
+          <div class="chart-title">Total Posts</div>
+          <div class="chart-sub">Output volume by channel</div>
+        </div>
+        <button class="chart-download" data-chart="chartPosts" data-filename="total-posts" title="Download as transparent PNG"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 1v8m0 0L3 6m3 3l3-3M2 11h8"/></svg>PNG</button>
       </div>
       <div class="chart-body"><canvas id="chartPosts"></canvas></div>
     </div>
 
     <div class="chart-card fade-in" style="animation-delay: 0.4s">
       <div class="chart-head">
-        <div class="chart-title">Engagement Rate</div>
-        <div class="chart-sub">Engagements per impression (%) · YouTube excluded</div>
+        <div class="chart-head-text">
+          <div class="chart-title">Engagement Rate</div>
+          <div class="chart-sub">Engagements per impression (%) · YouTube excluded</div>
+        </div>
+        <button class="chart-download" data-chart="chartEngRate" data-filename="engagement-rate" title="Download as transparent PNG"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 1v8m0 0L3 6m3 3l3-3M2 11h8"/></svg>PNG</button>
       </div>
       <div class="chart-body"><canvas id="chartEngRate"></canvas></div>
     </div>
 
     <div class="chart-card full fade-in" style="animation-delay: 0.42s">
       <div class="chart-head">
-        <div class="chart-title">Platform Share Over Time</div>
-        <div class="chart-sub">Monthly impression mix (% of total)</div>
+        <div class="chart-head-text">
+          <div class="chart-title">Platform Share Over Time</div>
+          <div class="chart-sub">Monthly impression mix (% of total)</div>
+        </div>
+        <button class="chart-download" data-chart="chartShareOverTime" data-filename="platform-share-over-time" title="Download as transparent PNG"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 1v8m0 0L3 6m3 3l3-3M2 11h8"/></svg>PNG</button>
       </div>
       <div class="chart-body"><canvas id="chartShareOverTime"></canvas></div>
     </div>
 
     <div class="chart-card full fade-in" style="animation-delay: 0.45s">
       <div class="chart-head">
-        <div class="chart-title">Platform Share</div>
-        <div class="chart-sub" id="shareSub">Impressions distribution · selected period</div>
+        <div class="chart-head-text">
+          <div class="chart-title">Platform Share</div>
+          <div class="chart-sub" id="shareSub">Impressions distribution · selected period</div>
+        </div>
+        <button class="chart-download" data-chart="chartShare" data-filename="platform-share" title="Download as transparent PNG"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 1v8m0 0L3 6m3 3l3-3M2 11h8"/></svg>PNG</button>
       </div>
       <div class="chart-body"><canvas id="chartShare"></canvas></div>
       <div class="share-grid" id="shareGrid"></div>
@@ -840,19 +886,30 @@ function buildKPIs() {
     : `${months[0].m.slice(0,3)} ${months[0].y} — ${months[monthCount-1].m.slice(0,3)} ${months[monthCount-1].y}`;
   document.getElementById('reportPeriod').textContent = periodLabel.toUpperCase();
 
+  // Full-number tooltip helper — shows the exact value with thousands separators
+  // when the KPI cell has been abbreviated (e.g. "12.34M" → title "12,345,678").
+  // Returns '' when the value isn't a usable number, so we don't decorate '—' cells.
+  const fullNum = (n) => (n === null || n === undefined || isNaN(n))
+    ? '' : Math.round(n).toLocaleString();
+  const fullSigned = (n) => {
+    if (n === null || n === undefined || isNaN(n)) return '';
+    const s = n > 0 ? '+' : '';
+    return s + Math.round(n).toLocaleString();
+  };
+
   const kpis = [
-    { label: 'Impressions', value: formatNum(totals['Impressions']), foot: `${monthCount} month${monthCount>1?'s':''}` },
-    { label: 'Engagements', value: formatNum(totals['Engagements']), foot: 'Total interactions' },
-    { label: 'Video Views', value: formatNum(totals['Video Views']), foot: 'All formats' },
-    { label: 'Follower Growth', value: formatSigned(totals['Follower Growth']), foot: 'Net change' },
-    { label: 'Total Posts', value: formatNum(totals['Total posts']), foot: 'Content output' },
-    { label: 'Engagement Rate', value: engRateOverall === null ? '—' : (engRateOverall * 100).toFixed(2), unit: '%', foot: 'Per impression' }
+    { label: 'Impressions', value: formatNum(totals['Impressions']), title: fullNum(totals['Impressions']), foot: `${monthCount} month${monthCount>1?'s':''}` },
+    { label: 'Engagements', value: formatNum(totals['Engagements']), title: fullNum(totals['Engagements']), foot: 'Total interactions' },
+    { label: 'Video Views', value: formatNum(totals['Video Views']), title: fullNum(totals['Video Views']), foot: 'All formats' },
+    { label: 'Follower Growth', value: formatSigned(totals['Follower Growth']), title: fullSigned(totals['Follower Growth']), foot: 'Net change' },
+    { label: 'Total Posts', value: formatNum(totals['Total posts']), title: fullNum(totals['Total posts']), foot: 'Content output' },
+    { label: 'Engagement Rate', value: engRateOverall === null ? '—' : (engRateOverall * 100).toFixed(2), unit: '%', title: '', foot: 'Per impression' }
   ];
 
   document.getElementById('kpiRow').innerHTML = kpis.map(k => `
     <div class="kpi">
       <div class="kpi-label">${k.label}</div>
-      <div class="kpi-value">${k.value}${k.unit ? `<span class="unit">${k.unit}</span>` : ''}</div>
+      <div class="kpi-value"${k.title ? ` title="${k.title}"` : ''}>${k.value}${k.unit ? `<span class="unit">${k.unit}</span>` : ''}</div>
       <div class="kpi-foot">${k.foot}</div>
     </div>
   `).join('');
@@ -962,6 +1019,47 @@ function render() {
   buildShareOverTimeChart();
   buildShareChart();
 }
+
+// ============================================================
+// CHART DOWNLOAD (transparent PNG)
+// ============================================================
+// Chart.js renders to a transparent canvas by default — no background color is
+// drawn into the bitmap (the dark surface comes from the surrounding .chart-card
+// CSS). So canvas.toDataURL('image/png') is already transparent. We just need
+// to trigger a download. Note: the axis/legend text uses light colors tuned for
+// dark backgrounds, so the PNG will read best when placed on a dark surface.
+function buildDownloadFilename(baseName) {
+  // Tag the file with the current view + selected month so repeated exports
+  // don't clobber each other in the user's downloads folder.
+  let scope = state.view; // 'combined' | year string
+  if (state.selectedMonth) {
+    const [y, m] = state.selectedMonth.split('|');
+    scope = `${y}-${m.toLowerCase().slice(0, 3)}`;
+  }
+  return `astralis-${baseName}-${scope}.png`;
+}
+
+function downloadChartPNG(canvasId, baseName) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  // Force a redraw so the export captures the current animated frame, not a
+  // partial one if the user clicked mid-animation.
+  if (charts[canvasId]) charts[canvasId].draw();
+
+  const dataURL = canvas.toDataURL('image/png');
+  const a = document.createElement('a');
+  a.href = dataURL;
+  a.download = buildDownloadFilename(baseName);
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.chart-download');
+  if (!btn) return;
+  downloadChartPNG(btn.dataset.chart, btn.dataset.filename);
+});
 
 // Initial render after fonts load
 document.fonts.ready.then(render);
