@@ -1025,9 +1025,9 @@ function render() {
 // ============================================================
 // Chart.js renders to a transparent canvas by default — no background color is
 // drawn into the bitmap (the dark surface comes from the surrounding .chart-card
-// CSS). So canvas.toDataURL('image/png') is already transparent. We just need
-// to trigger a download. Note: the axis/legend text uses light colors tuned for
-// dark backgrounds, so the PNG will read best when placed on a dark surface.
+// CSS). So the exported PNG is already transparent. Note: the axis/legend text
+// uses light colors tuned for dark backgrounds, so the PNG will read best when
+// placed on a dark surface.
 function buildDownloadFilename(baseName) {
   // Tag the file with the current view + selected month so repeated exports
   // don't clobber each other in the user's downloads folder.
@@ -1041,23 +1041,56 @@ function buildDownloadFilename(baseName) {
 
 function downloadChartPNG(canvasId, baseName) {
   const canvas = document.getElementById(canvasId);
-  if (!canvas) return;
-  // Force a redraw so the export captures the current animated frame, not a
-  // partial one if the user clicked mid-animation.
-  if (charts[canvasId]) charts[canvasId].draw();
+  if (!canvas) {
+    console.error('[download] canvas not found:', canvasId);
+    return;
+  }
+  const filename = buildDownloadFilename(baseName);
+  console.log('[download] exporting', canvasId, 'as', filename);
 
-  const dataURL = canvas.toDataURL('image/png');
-  const a = document.createElement('a');
-  a.href = dataURL;
-  a.download = buildDownloadFilename(baseName);
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
+  const triggerDownload = (href, revoke) => {
+    const a = document.createElement('a');
+    a.href = href;
+    a.download = filename;
+    a.rel = 'noopener';
+    document.body.appendChild(a);
+    try {
+      a.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+    } catch (err) {
+      a.click();
+    }
+    document.body.removeChild(a);
+    if (revoke) setTimeout(() => URL.revokeObjectURL(href), 1500);
+  };
+
+  // Prefer toBlob + Object URL — more reliable than data URLs across sandboxed
+  // iframes and avoids the giant-string-in-href issue for big charts.
+  if (canvas.toBlob) {
+    canvas.toBlob((blob) => {
+      if (!blob) {
+        console.error('[download] toBlob returned null for', canvasId);
+        // Fall back to data URL
+        try {
+          triggerDownload(canvas.toDataURL('image/png'), false);
+        } catch (err) {
+          console.error('[download] data URL fallback failed:', err);
+          alert('PNG download was blocked by the browser. Try opening the dashboard in a new tab and downloading from there.');
+        }
+        return;
+      }
+      const url = URL.createObjectURL(blob);
+      triggerDownload(url, true);
+    }, 'image/png');
+  } else {
+    triggerDownload(canvas.toDataURL('image/png'), false);
+  }
 }
 
 document.addEventListener('click', (e) => {
   const btn = e.target.closest('.chart-download');
   if (!btn) return;
+  e.preventDefault();
+  e.stopPropagation();
   downloadChartPNG(btn.dataset.chart, btn.dataset.filename);
 });
 
