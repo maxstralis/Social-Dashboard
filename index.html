@@ -1031,10 +1031,14 @@ function render() {
 function buildDownloadFilename(baseName) {
   // Tag the file with the current view + selected month so repeated exports
   // don't clobber each other in the user's downloads folder.
+  // state.selectedMonth is 'all' when no specific month is picked, otherwise '<year>|<MonthName>'.
   let scope = state.view; // 'combined' | year string
-  if (state.selectedMonth) {
-    const [y, m] = state.selectedMonth.split('|');
-    scope = `${y}-${m.toLowerCase().slice(0, 3)}`;
+  if (state.selectedMonth && state.selectedMonth !== 'all') {
+    const parts = state.selectedMonth.split('|');
+    if (parts.length === 2) {
+      const [y, m] = parts;
+      scope = `${y}-${m.toLowerCase().slice(0, 3)}`;
+    }
   }
   return `astralis-${baseName}-${scope}.png`;
 }
@@ -1091,7 +1095,12 @@ document.addEventListener('click', (e) => {
   if (!btn) return;
   e.preventDefault();
   e.stopPropagation();
-  downloadChartPNG(btn.dataset.chart, btn.dataset.filename);
+  try {
+    downloadChartPNG(btn.dataset.chart, btn.dataset.filename);
+  } catch (err) {
+    console.error('[download] failed:', err);
+    alert('PNG download failed: ' + (err && err.message ? err.message : err));
+  }
 });
 
 // Initial render after fonts load
