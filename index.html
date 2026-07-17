@@ -343,9 +343,9 @@ body::before {
     <div class="control-group">
       <span class="control-label">View</span>
       <div class="year-tabs" id="yearTabs">
-        <button class="year-tab" data-view="combined">Combined</button>
+        <button class="year-tab active" data-view="combined">Combined</button>
         <button class="year-tab" data-view="2025">2025</button>
-        <button class="year-tab active" data-view="2026">2026</button>
+        <button class="year-tab" data-view="2026">2026</button>
       </div>
     </div>
     <div class="control-group">
@@ -439,7 +439,7 @@ function getCSSVar(name) {
 // STATE
 // ============================================================
 const state = {
-  view: '2026',                                         // '2025', '2026', 'combined'
+  view: 'combined',                                         // '2025', '2026', 'combined'
   selectedMonth: 'all',                                 // 'all' or 'YYYY-Month'
   enabledPlatforms: new Set(PLATFORMS.map(p => p.key))  // all enabled by default
 };
